@@ -1,0 +1,16 @@
+{
+  "orgName": "Sf Connector Scratch Org",
+  "edition": "Developer",
+  "features": ["Communities", "ForceComPlatform", "EnableSetPasswordInApi","IndustriesActionPlan"],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled":true
+    },
+    "ExperienceBundleSettings": {
+      "enableExperienceBundleMetadata":true
+    }
+  }
+}
