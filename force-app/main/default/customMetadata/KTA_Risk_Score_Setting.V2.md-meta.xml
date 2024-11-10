@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>V2</label>
+    <protected>false</protected>
+    <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>KTA_Endpoint__c</field>
+        <value xsi:type="xsd:string">https://demo1-dev.dmoeukta.dev.kofaxcloud.com/Services/Sdk/jobservice.svc/json/createjobwithdocuments</value>
+    </values>
+    <values>
+        <field>KTA_Process_Id__c</field>
+        <value xsi:type="xsd:string">D64A81111917407DA0BDF440A045862B</value>
+    </values>
+    <values>
+        <field>KTA_Session_Id__c</field>
+        <value xsi:type="xsd:string">29958C1924BF87469881BF21BF6672DF</value>
+    </values>
+    <values>
+        <field>KTA_Task_Record_Type__c</field>
+        <value xsi:type="xsd:string">Document Request</value>
+    </values>
+</CustomMetadata>
