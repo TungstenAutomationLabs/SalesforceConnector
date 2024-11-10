@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Response_Timestamp__c</fullName>
+    <description>Timestamp when the Job response was created at Total Agility</description>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Response Timestamp</label>
+    <required>true</required>
+    <type>DateTime</type>
+</CustomField>
