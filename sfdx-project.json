@@ -1,12 +1,20 @@
 {
   "packageDirectories": [
     {
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "TA SF Connector",
+      "versionDescription": "Total Agility SF Connector"
     }
   ],
   "name": "SalesforceConnector",
   "namespace": "tungstenconnect",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "61.0"
+  "sourceApiVersion": "61.0",
+  "packageAliases": {
+    "TA SF Connector": "0Hoak0000000Kd3CAE",
+    "TA SF Connector@0.1.0-1": "04tak0000004IUbAAM"
+  }
 }
