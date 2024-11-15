@@ -30,8 +30,7 @@ global class KofaxKTAScore_Invocable {
             
             KofaxResponseRisk Result = KofaxKTAScore_Helper.processKofaxResponseRisk(res.getBody());
             
-            // Log Request 2023-09-08 #ToDo: Remove In Production
-            KofaxKTAScore_Utilities.logKofaxRequestRisk(KofaxKTAScore_Helper.jsonRequestBody, 'V2');
+           
 
             Results resultToReturn = new Results();
             resultToReturn.result = Result.d.Result;

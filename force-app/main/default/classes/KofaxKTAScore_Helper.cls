@@ -51,7 +51,8 @@ global with sharing class KofaxKTAScore_Helper {
         Map<String,String> headerMap = new Map<String,String>();
         String contentLength = String.valueOf(jsonRequestBody.length());
         headerMap.put('Content-Length', contentLength);
-        
+         // Log Request 2023-09-08 #ToDo: Remove In Production
+         KofaxKTAScore_Utilities.logKofaxRequestRisk(KofaxKTAScore_Helper.jsonRequestBody, 'V2');
         return KofaxKTAScore_Utilities.makeCallout(endPoint, 'POST', jsonRequestBody, headerMap);
         
     }
@@ -128,7 +129,8 @@ global with sharing class KofaxKTAScore_Helper {
         reqBody.sessionId = KofaxKTAScore_Constants.KOFAX_SESSION_ID;
         // Add Process Identity
         reqBody.ProcessIdentity = new KofaxRequestRiskV2.ProcessIdentity();
-        reqBody.processIdentity.Id = processId;
+        reqBody.processIdentity.Id = null;
+        reqBody.processIdentity.Name = processId;
         // Add RuntimeDocument
         reqBody.JobWithDocsInitialization = new KofaxRequestRiskV2.JobWithDocsInitialization();
         KofaxRequestRiskV2.RuntimeDocumentCollection runtimeDocumentVar = new KofaxRequestRiskV2.RuntimeDocumentCollection();

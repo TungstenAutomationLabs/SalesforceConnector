@@ -41,6 +41,7 @@ public class KofaxRequestRiskV2 {
 
 	public class ProcessIdentity {
 		public String Id;
+		public String Name;
 	}
 
     public class DocumentGroup {
