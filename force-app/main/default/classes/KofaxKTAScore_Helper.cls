@@ -51,8 +51,6 @@ global with sharing class KofaxKTAScore_Helper {
         Map<String,String> headerMap = new Map<String,String>();
         String contentLength = String.valueOf(jsonRequestBody.length());
         headerMap.put('Content-Length', contentLength);
-         // Log Request 2023-09-08 #ToDo: Remove In Production
-         KofaxKTAScore_Utilities.logKofaxRequestRisk(KofaxKTAScore_Helper.jsonRequestBody, 'V2');
         return KofaxKTAScore_Utilities.makeCallout(endPoint, 'POST', jsonRequestBody, headerMap);
         
     }
@@ -150,8 +148,8 @@ global with sharing class KofaxKTAScore_Helper {
         KofaxRequestRiskV2.InputVariables entityIdVar = new KofaxRequestRiskV2.InputVariables();
         entityIdVar.Id = 'EntityId';
         entityIdVar.Value = entityId;
-        reqBody.JobWithDocsInitialization.InputVariables = new List<KofaxRequestRiskV2.InputVariables>{ contentVersionVar, documentTypeVar, entityIdVar };
-
+        //reqBody.JobWithDocsInitialization.InputVariables = new List<KofaxRequestRiskV2.InputVariables>{ contentVersionVar, documentTypeVar, entityIdVar };
+        reqBody.JobWithDocsInitialization.InputVariables = null;
         jsonRequestBody = JSON.serialize(reqBody);
 
     }

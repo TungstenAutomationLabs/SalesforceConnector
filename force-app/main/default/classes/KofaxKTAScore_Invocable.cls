@@ -26,11 +26,12 @@ global class KofaxKTAScore_Invocable {
         try{
             Requests request = requestList[0];
             
-            HttpResponse res = KofaxKTAScore_Helper.submit(request.contentVersionIds[0], request.taskSubject, request.taskId, KofaxKTAScore_Invocable.PROCESS_ID_RISK, KofaxKTAScore_Invocable.PROCESS_ID_RISK);
+            HttpResponse res = KofaxKTAScore_Helper.submit(request.contentVersionIds[0], request.taskSubject, request.taskId, KofaxKTAScore_Invocable.PROCESS_ID_RISK,request.taskSubject);
             
             KofaxResponseRisk Result = KofaxKTAScore_Helper.processKofaxResponseRisk(res.getBody());
             
-           
+            // Log Request 2023-09-08 #ToDo: Remove In Production
+            KofaxKTAScore_Utilities.logKofaxRequestRisk(KofaxKTAScore_Helper.jsonRequestBody, 'V2');
 
             Results resultToReturn = new Results();
             resultToReturn.result = Result.d.Result;
@@ -42,8 +43,13 @@ global class KofaxKTAScore_Invocable {
             return resultWrapper;
 
         } catch (Exception e) {
+            System.debug('KofaxKTAScore_Invocable.execute>>>>>>>>>>>>>>: Exception: ' + e.getMessage());
+             // Log Request 2023-09-08 #ToDo: Remove In Production
+             KofaxKTAScore_Utilities.logKofaxRequestRisk(KofaxKTAScore_Helper.jsonRequestBody, 'V2');
             String errorMessage = 'KTA Invocable Exception: ' + e.getMessage() + '; Stack: ' + e.getStackTraceString();
-            throw new KTA_Invocable_Exception(errorMessage);
+            System.debug('KofaxKTAScore_Invocable.execute>>>>>>>>>>>>>>: errorMessage: ' + errorMessage);
+            return null;
+            //throw new KTA_Invocable_Exception(errorMessage);
         }
     }
 
