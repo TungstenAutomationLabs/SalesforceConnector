@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-10-2024
+ * @last modified on  : 11-17-2024
  * @last modified by  : Unni
 **/
 trigger TAJobResponseTrigger on JobResponse__e (after insert) {
@@ -60,7 +60,7 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
             } else if (executionMethod == 'Flow') {
                 // Call the Flow using Flow.Interview
                 Map<String, Object> flowInputs = new Map<String, Object>();
-                flowInputs.put('Response Message', event.Response_Message__c);
+                flowInputs.put('ResponseMessage', event.Response_Message__c);
 
                 Flow.Interview flow = Flow.Interview.createInterview(logicName, flowInputs);
                 flow.start();
