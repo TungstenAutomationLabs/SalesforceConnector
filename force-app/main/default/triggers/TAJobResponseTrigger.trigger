@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-17-2024
+ * @last modified on  : 11-21-2024
  * @last modified by  : Unni
 **/
 trigger TAJobResponseTrigger on JobResponse__e (after insert) {
@@ -23,7 +23,8 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
     for (Total_Agility_Process_Configurations__mdt config : [
         SELECT Callback_Execution_Method__c,
                Callback_Logi_Apex_or_Flow_name__c,
-               Total_Agility_Process_Name__c
+               Total_Agility_Process_Name__c,
+               Flow_Variable_mapping__c
         FROM Total_Agility_Process_Configurations__mdt
         WHERE Total_Agility_Process_Name__c IN :processNames
     ]) {
@@ -60,8 +61,11 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
             } else if (executionMethod == 'Flow') {
                 // Call the Flow using Flow.Interview
                 Map<String, Object> flowInputs = new Map<String, Object>();
+                if(String.isNotBlank(config.Flow_Variable_mapping__c)){
+                    flowInputs = FlowUtility.populateFlowVariables(config.Flow_Variable_mapping__c,event.Response_Message__c);
+                } else {
                 flowInputs.put('ResponseMessage', event.Response_Message__c);
-
+                }
                 Flow.Interview flow = Flow.Interview.createInterview(logicName, flowInputs);
                 flow.start();
             } else {

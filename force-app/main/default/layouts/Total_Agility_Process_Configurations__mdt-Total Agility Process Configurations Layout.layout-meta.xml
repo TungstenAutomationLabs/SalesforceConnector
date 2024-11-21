@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Callback_Logi_Apex_or_Flow_name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Flow_Variable_mapping__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
