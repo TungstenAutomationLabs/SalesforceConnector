@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Callback_Logi_Apex_or_Flow_name__c</fullName>
-    <description>Call back Apex or FLow name which is going to process the response receieved from Total Agility.</description>
+    <description>Call back Apex or FLow name which is going to process the response received from TotalAgility.</description>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Callback Logi Apex or Flow name</label>
+    <label>Callback Logic Apex or Flow name</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>
