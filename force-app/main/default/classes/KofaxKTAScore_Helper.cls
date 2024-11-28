@@ -220,10 +220,10 @@ global with sharing class KofaxKTAScore_Helper {
         String requestVersion = KofaxKTAScore_Constants.KOFAX_RISK_REQUEST_VERSION;
 
         KTA_Job__c jobToInsert = new KTA_Job__c(
-            Response_Json__c = kofaxResRisk.d.ResultJSON,
-            Kofax_Id__c = kofaxResRisk.d.Id,
-            Type__c	= 'Risk Score',
-            Returned_Variables__c = 'Task Id: ' + rqEntityId  + '\n'  + kofaxResRisk.d.Result + '\n' + kofaxResRisk.d.ResultMessage + '\n' + 'Request Version: ' + requestVersion
+            Response_Json__c = kofaxResRisk.d.ResultJSON
+            //Kofax_Id__c = kofaxResRisk.d.Id,
+            // Type__c	= 'Risk Score',
+            //Returned_Variables__c = 'Task Id: ' + rqEntityId  + '\n'  + kofaxResRisk.d.Result + '\n' + kofaxResRisk.d.ResultMessage + '\n' + 'Request Version: ' + requestVersion
         );
         
         return Database.insert(jobToInsert, false);

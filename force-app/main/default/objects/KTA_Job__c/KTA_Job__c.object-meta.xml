@@ -155,9 +155,10 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>KTA Job</label>
     <nameField>
+        <displayFormat>TA-{0000}</displayFormat>
         <label>KTA Job</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>KTA Jobs</pluralLabel>
     <searchLayouts></searchLayouts>
