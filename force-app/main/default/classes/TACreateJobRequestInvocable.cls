@@ -1,12 +1,12 @@
 /**
- * @description       :
+ * @description       : 
  * @author            : Unni
- * @group             :
+ * @group             : 
  * @last modified on  : 11-30-2024
  * @last modified by  : Unni
- **/
-global with sharing class TACreateJobWithDocRequestInvocable {
-    @InvocableMethod (callout=true label='Invoke TotalAgility Process with Documents' description='Invokes a TotalAgility Process which requires documents')
+**/
+global with sharing class TACreateJobRequestInvocable {
+    @InvocableMethod (callout=true label='Invoke TotalAgility Process' description='Invokes a TotalAgility Process')
     global static List<TAResponseWrapper> processRequests(List<RequestWrapper> requests) {
         List<TAResponseWrapper> responseList = new List<TAResponseWrapper>();
         List<KTA_Job__c> jobs = new List<KTA_Job__c>();
@@ -14,7 +14,7 @@ global with sharing class TACreateJobWithDocRequestInvocable {
         // Retrieve custom settings
         TotalAgility_System_Configurations__c config = TotalAgility_System_Configurations__c.getInstance();
         String sessionId = config.Session_ID__c;
-        String endpointURL = config.Total_Agility_End_point_URL__c + '/createjobwithdocuments';
+        String endpointURL = config.Total_Agility_End_point_URL__c + '/CreateJob';
         
         for (RequestWrapper request : requests) {
             TAResponseWrapper responseWrapper ;            
@@ -22,16 +22,14 @@ global with sharing class TACreateJobWithDocRequestInvocable {
             try {
                 // Process each request
                 job.Process_Name__c = request.processName;
-                job.Document_Id__c = String.join(request.documentIds, ',');
                 job.Request_Input_Variables__c = String.valueOf(request.inputs);
                 
                 System.debug('Processing request: ' + request.processName);
-                System.debug('Document Id: ' + request.documentIds);
                 System.debug('Input Variables: ' + request.inputs);
                 
                 // Build request body
-                TACreateJobWithDocRequest taDocRequestbody = TARequestHelper.buildReqBody_withDoc(sessionId, request.processName, request.documentIds, request.inputs);
-                String jsonRequestBody = JSON.serialize(taDocRequestbody);
+                TACreateJobRequest taRequestbody = TARequestHelper.buildReqBody(sessionId, request.processName,request.inputs);
+                String jsonRequestBody = JSON.serialize(taRequestbody);
                 
                 // Set headers
                 Map<String, String> headerMap = new Map<String, String>();
@@ -65,9 +63,6 @@ global with sharing class TACreateJobWithDocRequestInvocable {
     global  class RequestWrapper {
         @InvocableVariable(label='Process Name' description='TotalAgility process name to be invoked' required=true)
         global  String processName;
-        
-        @InvocableVariable (label='Document Ids' description='Document Ids to be passed to the process')
-        global  List<String> documentIds;
         
         @InvocableVariable (label='Input Variables' description='Input variables to be passed to the process')
         global  List<InputVariables> inputs;

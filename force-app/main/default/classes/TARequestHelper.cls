@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-28-2024
+ * @last modified on  : 11-30-2024
  * @last modified by  : Unni
 **/
 public with sharing class TARequestHelper {
@@ -45,6 +45,20 @@ public with sharing class TARequestHelper {
     }
 
 
+    public static TACreateJobRequest buildReqBody(String sessionID, String processName, List<InputVariables> inputs) {
+        
+       
+        // Set Session Id
+        TACreateJobRequest reqBody = new TACreateJobRequest();
+        reqBody.sessionId = sessionID;
+        // Add Process Identity
+        reqBody.ProcessIdentity = new TACreateJobRequest.ProcessIdentity();
+        reqBody.processIdentity.Id = null;
+        reqBody.processIdentity.Name = processName;
+        reqBody.jobinitialization = new TACreateJobRequest.JobInitialization();   
+        reqBody.jobinitialization.InputVariables = inputs;
+        return reqBody;
+    }
 
     /**
     * @methodName     : getMimeTypeByExtension
