@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-30-2024
+ * @last modified on  : 12-04-2024
  * @last modified by  : Unni
 **/
 public with sharing class TARequestHelper {
@@ -18,7 +18,7 @@ public with sharing class TARequestHelper {
         reqBody.sessionId = sessionID;
         // Add Process Identity
         reqBody.ProcessIdentity = new TACreateJobWithDocRequest.ProcessIdentity();
-        reqBody.processIdentity.Id = null;
+        //reqBody.processIdentity.Id = null;
         reqBody.processIdentity.Name = processName;
         // Add RuntimeDocument
         reqBody.JobWithDocsInitialization = new TACreateJobWithDocRequest.JobWithDocsInitialization();
@@ -29,12 +29,12 @@ public with sharing class TARequestHelper {
                                                 FROM ContentVersion 
                                                 WHERE Id in :documentIds]) {
             Blob versiondataBase64 = contentVersion.VersionData;
-            String mimeType = getMimeTypeFromExtension(contentVersion.FileExtension);
+           // String mimeType = getMimeTypeFromExtension(contentVersion.FileExtension);
             TACreateJobWithDocRequest.RuntimeDocumentCollection runtimeDocumentVar = new TACreateJobWithDocRequest.RuntimeDocumentCollection();
             runtimeDocumentVar.Base64Data = versiondataBase64;
-            runtimeDocumentVar.MimeType = mimeType;
-            runtimeDocumentVar.ReturnAllFields = true;
-            runtimeDocumentVar.ReturnFullTextOcr = false;
+            // runtimeDocumentVar.MimeType = mimeType;
+            // runtimeDocumentVar.ReturnAllFields = true;
+            // runtimeDocumentVar.ReturnFullTextOcr = false;
             runtimeDocumentCollectionList.add(runtimeDocumentVar);
             
         }
@@ -53,7 +53,7 @@ public with sharing class TARequestHelper {
         reqBody.sessionId = sessionID;
         // Add Process Identity
         reqBody.ProcessIdentity = new TACreateJobRequest.ProcessIdentity();
-        reqBody.processIdentity.Id = null;
+        //reqBody.processIdentity.Id = null;
         reqBody.processIdentity.Name = processName;
         reqBody.jobinitialization = new TACreateJobRequest.JobInitialization();   
         reqBody.jobinitialization.InputVariables = inputs;
@@ -80,6 +80,10 @@ public with sharing class TARequestHelper {
     }
 
     public static HttpResponse makeCallout(String endPoint, String method, String body, Map<String, String> headers) {
+        System.debug('Making callout to: ' + endPoint);
+        System.debug('Method: ' + method);
+        System.debug('Body: ' + body);
+        System.debug('Headers: ' + headers);
         Http h = new Http();
         HttpRequest req = new HttpRequest();
 
@@ -102,10 +106,12 @@ public with sharing class TARequestHelper {
 
         HttpResponse res = h.send(req);
 
-        if ((res.getStatusCode() < 200 || res.getStatusCode() > 299)) {
-            //unsuccessful callout and no custom error handling in place
-            throw new CalloutException('Endpoint : ' + endpoint + ' , Error: ' + (String) res.getBody());
-        }
+        // if ((res.getStatusCode() < 200 || res.getStatusCode() > 299)) {
+        //     //unsuccessful callout and no custom error handling in place
+
+        //     System.debug('Callout error: ' + res.getStatusCode() + ' ' + res.getStatus());
+        //     throw new CalloutException('Endpoint : ' + endpoint + ' , Error: ' + (String) res.getBody());
+        // }
 
         return res;
     }

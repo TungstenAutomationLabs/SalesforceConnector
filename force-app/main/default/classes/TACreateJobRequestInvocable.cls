@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-30-2024
+ * @last modified on  : 12-04-2024
  * @last modified by  : Unni
 **/
 global with sharing class TACreateJobRequestInvocable {
@@ -30,7 +30,7 @@ global with sharing class TACreateJobRequestInvocable {
                 // Build request body
                 TACreateJobRequest taRequestbody = TARequestHelper.buildReqBody(sessionId, request.processName,request.inputs);
                 String jsonRequestBody = JSON.serialize(taRequestbody);
-                
+                job.Request_Json_body__c = jsonRequestBody;
                 // Set headers
                 Map<String, String> headerMap = new Map<String, String>();
                 headerMap.put('Content-Length', String.valueOf(jsonRequestBody.length()));
@@ -43,17 +43,21 @@ global with sharing class TACreateJobRequestInvocable {
                 
             } catch (Exception e) {
                 // Handle exceptions and log errors
+                
                 System.debug('Error processing request: ' + e.getMessage());
-                responseWrapper.jobID = 'n/a';
-                responseWrapper.Result = 'FAILURE';
-                responseWrapper.ResultMessage = 'Exception : '  + e.getMessage();
+                
+                 responseWrapper = new TAResponseWrapper();
+                 responseWrapper.jobID = 'n/a';
+                 responseWrapper.Result = 'FAILURE';
+                 responseWrapper.ResultMessage = 'Exception : '  + e.getMessage();
             }
-            responseList.add(responseWrapper);
+           // responseList.add(responseWrapper);
             jobs.add(job);
         }
         
         // Insert jobs
         if (!jobs.isEmpty()) {
+            
             insert jobs;
         }
         

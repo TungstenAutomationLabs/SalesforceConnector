@@ -2,13 +2,13 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-24-2024
+ * @last modified on  : 12-04-2024
  * @last modified by  : Unni
 **/
 global class InputVariables {
     @AuraEnabled
-    global  String name;
+    global  String Id;
     
     @AuraEnabled
-    global  String value;
+    global  String Value;
 }
