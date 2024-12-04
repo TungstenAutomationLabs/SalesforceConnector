@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-21-2024
+ * @last modified on  : 12-04-2024
  * @last modified by  : Unni
 **/
 public with sharing class FlowUtility {
@@ -35,7 +35,7 @@ public with sharing class FlowUtility {
                 String pathPart = resMessagePath[i];
                 if (i == resMessagePath.size() - 1) {
                     flowInputs.put(flowvariable, currentMap.get(pathPart));
-                    System.debug('Flow Variable Value: ' + (String)currentMap.get(pathPart));
+                   // System.debug('Flow Variable Value: ' + (String)currentMap.get(pathPart));
                 } else {
                     currentMap = (Map<String, Object>) currentMap.get(pathPart);
                 }
