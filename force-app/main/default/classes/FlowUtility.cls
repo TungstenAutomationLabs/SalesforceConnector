@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-04-2024
+ * @last modified on  : 12-09-2024
  * @last modified by  : Unni
 **/
 public with sharing class FlowUtility {
@@ -10,37 +10,64 @@ public with sharing class FlowUtility {
 
     }
     public static Map<String, Object> populateFlowVariables(String flowVariableMapping, String responseMessage) {
-        Map<String, Object> parsedData = (Map<String, Object>) JSON.deserializeUntyped(flowVariableMapping);
-        Map<String,List<String>> fieldMapping = new Map<String,List<String>>();
-        Map<String, Object> flowInputs = new Map<String, Object>();
-        
-        for (String key : parsedData.keySet()) {
-            String value = (String)parsedData.get(key);
-            if(String.isNotBlank(value)){
-                if(value.contains('.')){
-                    List<String> objField = value.split('\\.');
-                    fieldMapping.put(key,objField);
-                }
-            }
-        }
-        
+        Map<String, Object> parsedMapping = (Map<String, Object>) JSON.deserializeUntyped(flowVariableMapping);
         Map<String, Object> responseMessageParsedData = (Map<String, Object>) JSON.deserializeUntyped(responseMessage);
-        
-        for (String  flowvariable : fieldMapping.keySet()) {
-            List<String> resMessagePath = fieldMapping.get(flowvariable);
-            System.debug('Flow Variable: ' + flowvariable);
-            
-            Map<String, Object> currentMap = responseMessageParsedData;
-            for (Integer i = 0; i < resMessagePath.size(); i++) {
-                String pathPart = resMessagePath[i];
-                if (i == resMessagePath.size() - 1) {
-                    flowInputs.put(flowvariable, currentMap.get(pathPart));
-                   // System.debug('Flow Variable Value: ' + (String)currentMap.get(pathPart));
-                } else {
-                    currentMap = (Map<String, Object>) currentMap.get(pathPart);
+        Map<String, Object> flowInputs = new Map<String, Object>();
+    
+        for (String key : parsedMapping.keySet()) {
+            Object mappingValue = parsedMapping.get(key);
+    
+            if (mappingValue instanceof String) {
+                // Simple field mapping
+                List<String> pathParts = ((String) mappingValue).split('\\.');
+                Object value = getValueFromPath(responseMessageParsedData, pathParts);
+                flowInputs.put(key, value);
+    
+            } else if (mappingValue instanceof Map<String, Object>) {
+                // Complex mapping for arrays
+                Map<String, Object> complexMapping = (Map<String, Object>) mappingValue;
+                String path = (String) complexMapping.get('Path');
+                String sObjectType = (String) complexMapping.get('SObject');
+                Map<String, Object> rawFieldsMapping = (Map<String, Object>) complexMapping.get('FieldsMapping');
+                Map<String, String> fieldsMapping = new Map<String, String>();
+                for (String fieldKey : rawFieldsMapping.keySet()) {
+                    fieldsMapping.put(fieldKey, (String) rawFieldsMapping.get(fieldKey));
                 }
+    
+                List<Object> arrayData = (List<Object>) getValueFromPath(responseMessageParsedData, path.split('\\.'));
+                List<SObject> sObjectCollection = new List<SObject>();
+    
+                for (Object arrayItem : arrayData) {
+                    Map<String, Object> arrayItemMap = (Map<String, Object>) arrayItem;
+                    SObject sObj = (SObject) Type.forName(sObjectType).newInstance();
+    
+                    for (String sField : fieldsMapping.keySet()) {
+                        String jsonField = fieldsMapping.get(sField);
+                        sObj.put(sField, arrayItemMap.get(jsonField));
+                    }
+                    sObjectCollection.add(sObj);
+                }
+                flowInputs.put(key, sObjectCollection);
             }
         }
+    for (String key : flowInputs.keySet()) {
+        System.debug('Key: ' + key + ', Value: ' + flowInputs.get(key));
+    }
+    
         return flowInputs;
     }
+    
+    // Helper method to traverse a JSON path
+    private static Object getValueFromPath(Map<String, Object> data, List<String> pathParts) {
+        Object current = data;
+        for (String part : pathParts) {
+            if (current instanceof Map<String, Object>) {
+                current = ((Map<String, Object>) current).get(part);
+            } else {
+                return null; // Path not found
+            }
+        }
+        return current;
+    }
+    
 }
