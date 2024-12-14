@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-04-2024
+ * @last modified on  : 12-14-2024
  * @last modified by  : Unni
 **/
 global with sharing class TACreateJobRequestInvocable {
@@ -21,6 +21,7 @@ global with sharing class TACreateJobRequestInvocable {
             KTA_Job__c job = new KTA_Job__c();
             try {
                 // Process each request
+                job.Request_Type__c ='Outbound';
                 job.Process_Name__c = request.processName;
                 job.Request_Input_Variables__c = String.valueOf(request.inputs);
                 
@@ -55,9 +56,10 @@ global with sharing class TACreateJobRequestInvocable {
             jobs.add(job);
         }
         
+        TotalAgility_System_Configurations__c systemConfig = TotalAgility_System_Configurations__c.getInstance();
+        Boolean isLoggingEnabled = (systemConfig != null) && systemConfig.Log_Job_inbound_and_outbound_Requests__c;        
         // Insert jobs
-        if (!jobs.isEmpty()) {
-            
+        if (!jobs.isEmpty() && isLoggingEnabled) {
             insert jobs;
         }
         

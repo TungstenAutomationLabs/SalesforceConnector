@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 11-21-2024
+ * @last modified on  : 12-14-2024
  * @last modified by  : Unni
 **/
 trigger TAJobResponseTrigger on JobResponse__e (after insert) {
@@ -11,6 +11,9 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
     for (JobResponse__e event : Trigger.new) {
         processNames.add(event.Process_Name__c);
     }
+    // Check if logging is enabled in custom settings
+    TotalAgility_System_Configurations__c systemConfig = TotalAgility_System_Configurations__c.getInstance();
+    Boolean isLoggingEnabled = (systemConfig != null) && systemConfig.Log_Job_inbound_and_outbound_Requests__c;
 
     // Validate CRUD permissions
     if (!Schema.sObjectType.Total_Agility_Process_Configurations__mdt.isAccessible()) {
@@ -31,9 +34,19 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
         configMap.put(config.Total_Agility_Process_Name__c, config);
     }
 
+    List<KTA_Job__c> ktaJobs = new List<KTA_Job__c>();
     // Iterate over all platform events
     for (JobResponse__e event : Trigger.new) {
         try {
+            if (isLoggingEnabled) {
+                KTA_Job__c ktaJob = new KTA_Job__c(
+                    Inbound_Request_JSON__c = event.Response_Message__c,
+                    Process_Name__c = event.Process_Name__c,
+                    Request_Type__c ='Inbound'
+                );
+                ktaJobs.add(ktaJob);
+            }
+            
             // Get the configuration for the current event
             Total_Agility_Process_Configurations__mdt config = configMap.get(event.Process_Name__c);
             if (config == null) {
@@ -73,6 +86,9 @@ trigger TAJobResponseTrigger on JobResponse__e (after insert) {
             }
         } catch (Exception ex) {
             System.debug('Error processing JobResponse: ' + ex.getMessage());
+        }
+        if (!ktaJobs.isEmpty()) {
+            insert ktaJobs;
         }
     }
 }
