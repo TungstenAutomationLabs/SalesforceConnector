@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 12-14-2024
+ * @last modified on  : 12-20-2024
  * @last modified by  : Unni
  **/
 global with sharing class TACreateJobWithDocRequestInvocable {
@@ -35,16 +35,21 @@ global with sharing class TACreateJobWithDocRequestInvocable {
                 String jsonRequestBody = JSON.serialize(taDocRequestbody);
                 if(jsonRequestBody.length() > 131072){
                     
-                    // Regular expression to match the key "RuntimeDocumentCollection" and its value
-                    String regExp = '"RuntimeDocumentCollection"\\s*:\\s*\\[.*?\\](,?)';
-                    // Replace with an empty string or a comma (if necessary for cleanup)
-                    String replacement = '"RuntimeDocumentCollection":"String Too Long to store...."'; // Preserve trailing comma if it exists
+                    // // Regular expression to match the key "RuntimeDocumentCollection" and its value
+                    // String regExp = '"RuntimeDocumentCollection"\\s*:\\s*\\[.*?\\](,?)';
+                    // // Replace with an empty string or a comma (if necessary for cleanup)
+                    // String replacement = '"RuntimeDocumentCollection":"String Too Long to store...."'; // Preserve trailing comma if it exists
 
-                    // Replace the first occurrence of the matching key-value pair
-                    String modifiedJsonString = jsonRequestBody.replaceFirst(regExp, replacement);
+                    // // Replace the first occurrence of the matching key-value pair
+                    // String modifiedJsonString = jsonRequestBody.replaceFirst(regExp, replacement);
+                   
 
-                    // Clean up any leftover commas (optional)
-                    job.Request_Json_body__c = modifiedJsonString.replace(',}', '}').replace(',]', ']');
+                    // // Clean up any leftover commas (optional)
+                    // job.Request_Json_body__c = modifiedJsonString.replace(',}', '}').replace(',]', ']');
+                    TACreateJobWithDocRequest jobrequest = (TACreateJobWithDocRequest)JSON.deserialize(jsonRequestBody, TACreateJobWithDocRequest.class);
+                    jobrequest.JobWithDocsInitialization.RuntimeDocumentCollection = null;
+                    job.Request_Json_body__c = JSON.serialize(jobrequest);
+
                 }
                 else {
                     job.Request_Json_body__c = jsonRequestBody;
