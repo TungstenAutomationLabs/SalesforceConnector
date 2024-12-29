@@ -11,6 +11,10 @@ export default class JsonFieldViewer extends LightningElement {
     fieldValues = []; // Array to store Name-Value pairs
     error;
 
+    get hasFieldValues() {
+        return this.fieldValues.length > 0;
+    }
+
      // Dynamically determine icon name based on section state
      get iconName() {
         return this.isExpanded ? 'utility:chevrondown' : 'utility:chevronright';

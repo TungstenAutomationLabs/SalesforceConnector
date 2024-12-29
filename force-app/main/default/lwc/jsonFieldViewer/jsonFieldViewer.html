@@ -2,48 +2,50 @@
   @description       : 
   @author            : Unni
   @group             : 
-  @last modified on  : 12-27-2024
+  @last modified on  : 12-29-2024
   @last modified by  : Unni
 -->
 <template>
-    <div class={contentClass}>
-        <!-- Section Header -->
-        <h3
-            class="label slds-section__title slds-truncate slds-p-around_xx-small slds-theme_shade"
-            aria-expanded={isExpanded}
-        >
-            <button
-                class="slds-button slds-section__title-action"
-                aria-controls="field-section-content"
+    <template lwc:if={hasFieldValues}>
+        
+        <div class={contentClass}>
+            <!-- Section Header -->
+            <h3
+                class="label slds-section__title slds-truncate slds-p-around_xx-small slds-theme_shade"
                 aria-expanded={isExpanded}
-                onclick={toggleSection}
             >
-                <lightning-icon
-                    class="slds-m-right_small"
-                    icon-name={iconName}
-                    size="x-small"
-                ></lightning-icon>
-                <span class="slds-truncate" title={sectionName}> {sectionName}</span>
-            </button>
-        </h3>
-        <div class="slds-section__content" id="field-section-content">
-            <!-- Grid for two-column layout -->
-            <div class="slds-grid slds-wrap">
-                <template for:each={fieldValues} for:item="field">
-                    <div key={field.name} class="slds-col slds-size_1-of-2 slds-p-around_small">
-                        <div class="slds-form-element">
-                            <label class="slds-form-element__label">{field.name}</label>
-                            <div class="slds-form-element__control">
-                                <span class="slds-form-element__static">{field.value}</span>
+                <button
+                    class="slds-button slds-section__title-action"
+                    aria-controls="field-section-content"
+                    aria-expanded={isExpanded}
+                    onclick={toggleSection}
+                >
+                    <lightning-icon
+                        class="slds-m-right_small"
+                        icon-name={iconName}
+                        size="x-small"
+                    ></lightning-icon>
+                    <span class="slds-truncate" title={sectionName}> {sectionName}</span>
+                </button>
+            </h3>
+            <div class="slds-section__content" id="field-section-content">
+                <!-- Grid for two-column layout -->
+                <div class="slds-grid slds-wrap">
+                    <template for:each={fieldValues} for:item="field">
+                        <div key={field.name} class="slds-col slds-size_1-of-2 slds-p-around_small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label">{field.name}</label>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-form-element__static">{field.value}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
+                
             </div>
-            
         </div>
-    </div>
   
-    
+    </template>
     
 </template>
