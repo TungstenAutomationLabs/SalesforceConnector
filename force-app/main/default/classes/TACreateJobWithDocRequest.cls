@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-04-2024
+ * @last modified on  : 12-31-2024
  * @last modified by  : Unni
 **/
 public with sharing class TACreateJobWithDocRequest {
@@ -29,7 +29,7 @@ public with sharing class TACreateJobWithDocRequest {
 		// public String FilePath;
 		// public String FolderId;
 		// public String FolderTypeId;
-		// public String MimeType;
+		public String MimeType;
 		// public List<PageDataList> PageDataList;
 		// public Boolean ReturnAllFields;
 		// public Boolean ReturnFullTextOcr;

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-04-2024
+ * @last modified on  : 12-31-2024
  * @last modified by  : Unni
 **/
 public with sharing class TARequestHelper {
@@ -29,10 +29,10 @@ public with sharing class TARequestHelper {
                                                 FROM ContentVersion 
                                                 WHERE Id in :documentIds]) {
             Blob versiondataBase64 = contentVersion.VersionData;
-           // String mimeType = getMimeTypeFromExtension(contentVersion.FileExtension);
+            String mimeType = getMimeTypeFromExtension(contentVersion.FileExtension);
             TACreateJobWithDocRequest.RuntimeDocumentCollection runtimeDocumentVar = new TACreateJobWithDocRequest.RuntimeDocumentCollection();
             runtimeDocumentVar.Base64Data = versiondataBase64;
-            // runtimeDocumentVar.MimeType = mimeType;
+            runtimeDocumentVar.MimeType = mimeType;
             // runtimeDocumentVar.ReturnAllFields = true;
             // runtimeDocumentVar.ReturnFullTextOcr = false;
             runtimeDocumentCollectionList.add(runtimeDocumentVar);

@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 12-20-2024
+ * @last modified on  : 12-31-2024
  * @last modified by  : Unni
  **/
 global with sharing class TACreateJobWithDocRequestInvocable {
@@ -10,6 +10,7 @@ global with sharing class TACreateJobWithDocRequestInvocable {
     global static List<TAResponseWrapper> processRequests(List<RequestWrapper> requests) {
         List<TAResponseWrapper> responseList = new List<TAResponseWrapper>();
         List<KTA_Job__c> jobs = new List<KTA_Job__c>();
+        List<ContentVersion> contentVersions = new List<ContentVersion>();
         
         // Retrieve custom settings
         TotalAgility_System_Configurations__c config = TotalAgility_System_Configurations__c.getInstance();
@@ -19,6 +20,7 @@ global with sharing class TACreateJobWithDocRequestInvocable {
         for (RequestWrapper request : requests) {
             TAResponseWrapper responseWrapper ;            
             KTA_Job__c job = new KTA_Job__c();
+            
             try {
                 // Process each request
                 job.Request_Type__c ='Outbound';
@@ -54,6 +56,14 @@ global with sharing class TACreateJobWithDocRequestInvocable {
                 else {
                     job.Request_Json_body__c = jsonRequestBody;
                 }
+
+                // Save JSON request body as a file attachment
+                ContentVersion contentVersion = new ContentVersion();
+                contentVersion.Title = request.processName + '_RequestBody.json';
+                contentVersion.PathOnClient = request.processName + '_RequestBody.json';
+                contentVersion.VersionData = Blob.valueOf(jsonRequestBody);
+                contentVersion.IsMajorVersion = true;
+                contentVersions.add(contentVersion);
                 
                 // Set headers
                 Map<String, String> headerMap = new Map<String, String>();
@@ -83,6 +93,21 @@ global with sharing class TACreateJobWithDocRequestInvocable {
         // Insert jobs
         if (!jobs.isEmpty() && isLoggingEnabled) {
             insert jobs;
+            // Relate ContentVersion records to jobs
+        if (!contentVersions.isEmpty()) {
+            insert contentVersions;
+            List<ContentDocumentLink> documentLinks = new List<ContentDocumentLink>();
+            for (ContentVersion contentVersion : [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id IN :contentVersions]) {
+                ContentDocumentLink link = new ContentDocumentLink();
+                link.ContentDocumentId = contentVersion.ContentDocumentId;
+                link.LinkedEntityId = jobs[0].Id;
+                link.ShareType = 'V';
+                link.Visibility = 'AllUsers';
+                documentLinks.add(link);
+            }
+            insert documentLinks;
+        }
+
         }
         
         return responseList;
