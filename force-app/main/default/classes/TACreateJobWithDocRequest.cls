@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-31-2024
+ * @last modified on  : 01-18-2025
  * @last modified by  : Unni
 **/
 public with sharing class TACreateJobWithDocRequest {
@@ -41,15 +41,15 @@ public with sharing class TACreateJobWithDocRequest {
 		public String Name;
 	}
 
-    public class DocumentGroup {
-	}
+    // public class DocumentGroup {
+	// }
 
-    public class FieldsToReturn {
-	}
+    // public class FieldsToReturn {
+	// }
 
-    public class PageDataList {
-	}
-    public static TACreateJobWithDocRequest parse(String json) {
-		return (TACreateJobWithDocRequest) System.JSON.deserialize(json, TACreateJobWithDocRequest.class);
-	}
+    // public class PageDataList {
+	// }
+    // public static TACreateJobWithDocRequest parse(String json) {
+	// 	return (TACreateJobWithDocRequest) System.JSON.deserialize(json, TACreateJobWithDocRequest.class);
+	// }
 }

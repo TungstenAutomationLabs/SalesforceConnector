@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 11-28-2024
+ * @last modified on  : 01-18-2025
  * @last modified by  : Unni
  **/
 global with sharing class TAResponse {
@@ -26,7 +26,7 @@ global with sharing class TAResponse {
             } else {
                 response.Id = 'n/a';
                 response.Result = 'FAILURE';
-                response.ResultMessage = 'Failure response from TotalAgility. ' + '\n' + res.getStatus();
+                response.ResultMessage = 'Unexpected response from TotalAgility. ' + '\n' + res.getStatus();
             }
         } else {
             response.Id = 'n/a';

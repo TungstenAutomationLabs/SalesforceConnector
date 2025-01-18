@@ -46,7 +46,9 @@ export default class JsonFieldViewer extends LightningElement {
             const jsonField = data.fields[this.jsonFieldName]?.value;
             if (jsonField) {
                 try {
-                    const parsedJson = JSON.parse(jsonField); // Parse JSON string
+                    //const parsedJson = JSON.parse(jsonField); // Parse JSON string
+                    const cleanedJsonField = jsonField.replace(/\\\\"/g, '"').replace(/\\"/g, '"');
+                    const parsedJson = JSON.parse(cleanedJsonField);
                     this.processJson(parsedJson); // Process JSON structure
                 } catch (err) {
                     this.error = 'Invalid JSON format in the field';

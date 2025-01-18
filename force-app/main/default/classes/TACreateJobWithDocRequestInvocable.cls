@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 12-31-2024
+ * @last modified on  : 01-11-2025
  * @last modified by  : Unni
  **/
 global with sharing class TACreateJobWithDocRequestInvocable {
@@ -27,10 +27,6 @@ global with sharing class TACreateJobWithDocRequestInvocable {
                 job.Process_Name__c = request.processName;
                 job.Document_Id__c = String.join(request.documentIds, ',');
                 job.Request_Input_Variables__c = String.valueOf(request.inputs);
-                
-                System.debug('Processing request: ' + request.processName);
-                System.debug('Document Id: ' + request.documentIds);
-                System.debug('Input Variables: ' + request.inputs);
                 
                 // Build request body
                 TACreateJobWithDocRequest taDocRequestbody = TARequestHelper.buildReqBody_withDoc(sessionId, request.processName, request.documentIds, request.inputs);
@@ -77,7 +73,6 @@ global with sharing class TACreateJobWithDocRequestInvocable {
                 
             } catch (Exception e) {
                 // Handle exceptions and log errors
-                System.debug('Error processing request: ' + e.getMessage());
                 responseWrapper = new TAResponseWrapper();
                 responseWrapper.jobID = 'n/a';
                 responseWrapper.Result = 'FAILURE';

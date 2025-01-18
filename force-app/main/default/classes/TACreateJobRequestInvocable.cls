@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Unni
  * @group             : 
- * @last modified on  : 12-14-2024
+ * @last modified on  : 01-14-2025
  * @last modified by  : Unni
 **/
 global with sharing class TACreateJobRequestInvocable {
@@ -52,8 +52,8 @@ global with sharing class TACreateJobRequestInvocable {
                  responseWrapper.Result = 'FAILURE';
                  responseWrapper.ResultMessage = 'Exception : '  + e.getMessage();
             }
-           // responseList.add(responseWrapper);
-            jobs.add(job);
+           responseList.add(responseWrapper);
+           jobs.add(job);
         }
         
         TotalAgility_System_Configurations__c systemConfig = TotalAgility_System_Configurations__c.getInstance();
