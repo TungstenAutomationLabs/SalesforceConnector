@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 01-18-2025
+ * @last modified on  : 02-18-2025
  * @last modified by  : Unni
  **/
 public without sharing class TAJobResponseHelper {
@@ -11,6 +11,7 @@ public without sharing class TAJobResponseHelper {
             if(processConfigurations == NULL){
                 processConfigurations = [SELECT Callback_Execution_Method__c,
             Callback_Logi_Apex_or_Flow_name__c,
+            Callback_Logic_Namespace__c,
             Total_Agility_Process_Name__c,
             Flow_Variable_mapping__c
      FROM Total_Agility_Process_Configurations__mdt 
@@ -59,7 +60,8 @@ public without sharing class TAJobResponseHelper {
                 
                 // Check the Callback Execution Method
                 String executionMethod = config.Callback_Execution_Method__c;
-                String logicName = config.Callback_Logi_Apex_or_Flow_name__c;                
+                String logicName = config.Callback_Logi_Apex_or_Flow_name__c;
+                String logicNamespace = config.Callback_Logic_Namespace__c;                
                 if (executionMethod == 'Apex') {
                     // Dynamically invoke the Apex class
                     Type callbackClassType = Type.forName(logicName);
@@ -85,8 +87,15 @@ public without sharing class TAJobResponseHelper {
                         ktajob.Inbound_Request_Flow_Inputs__c = JSON.serialize(flowInputs);
                     }
                     if(!Test.isRunningTest()){
-                        Flow.Interview flow = Flow.Interview.createInterview(logicName, flowInputs);
-                        flow.start();
+                        if(String.isNotBlank(logicNamespace)){
+                            Flow.Interview flow = Flow.Interview.createInterview(logicNamespace, logicName, flowInputs);
+                            flow.start();
+                        }
+                        else {
+                            Flow.Interview flow = Flow.Interview.createInterview(logicName, flowInputs);
+                            flow.start();
+                        }
+                        
                     }
                     
                 } else {

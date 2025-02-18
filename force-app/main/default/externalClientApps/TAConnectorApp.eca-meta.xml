@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ExternalClientApplication xmlns="http://soap.sforce.com/2006/04/metadata">
-    <contactEmail>unnisalesforce@gmail.com</contactEmail>
-    <distributionState>Packaged</distributionState>
-    <isProtected>false</isProtected>
-    <label>TAConnectorApp</label>
-    <orgScopedExternalApp>00Dak00000FAsXN:TAConnectorApp</orgScopedExternalApp>
-</ExternalClientApplication>

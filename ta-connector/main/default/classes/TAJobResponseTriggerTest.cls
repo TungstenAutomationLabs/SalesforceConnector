@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Unni
  * @group             :
- * @last modified on  : 01-18-2025
+ * @last modified on  : 02-14-2025
  * @last modified by  : Unni
  **/
 @IsTest
@@ -26,15 +26,15 @@ private class TAJobResponseTriggerTest {
     
     @IsTest
     static void testJobresponseApexExecution() {
-        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{"tungstenconnect__Callback_Execution_Method__c":"Apex","tungstenconnect__Callback_Logi_Apex_or_Flow_name__c":"TAJobResponseTriggerTest.TACallbackProcessorTest","tungstenconnect__Flow_Variable_mapping__c":"","tungstenconnect__Total_Agility_Process_Name__c":"accountCreationProcess"}]', List<Total_Agility_Process_Configurations__mdt>.class);
+        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{"Callback_Execution_Method__c":"Apex","Callback_Logi_Apex_or_Flow_name__c":"TAJobResponseTriggerTest.TACallbackProcessorTest","Flow_Variable_mapping__c":"","Total_Agility_Process_Name__c":"accountCreationProcess"}]', List<Total_Agility_Process_Configurations__mdt>.class);
         Test.startTest();
         String responseMessage = '{"Name": "Acme Corporation", "Phone": "123-456-7890", "Industry": "Technology"}';
         TAJobResponseHelper.processConfigurations = processConfigurations;
 
-        tungstenconnect__JobResponse__e jobEvent = new tungstenconnect__JobResponse__e(
-            tungstenconnect__Process_Name__c = 'accountCreationProcess',
-            tungstenconnect__Response_Message__c = responseMessage,
-            tungstenconnect__Response_Timestamp__c = DateTime.now()
+        JobResponse__e jobEvent = new JobResponse__e(
+            Process_Name__c = 'accountCreationProcess',
+            Response_Message__c = responseMessage,
+            Response_Timestamp__c = DateTime.now()
         );
 
         // Publish the platform event
@@ -65,15 +65,15 @@ private class TAJobResponseTriggerTest {
 
     @IsTest
     static void testJobresponseFlowExecution() {
-        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{"tungstenconnect__Callback_Execution_Method__c":"Flow","tungstenconnect__Callback_Logi_Apex_or_Flow_name__c":"testFlow","tungstenconnect__Flow_Variable_mapping__c":"{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}","tungstenconnect__Total_Agility_Process_Name__c":"accountCreationProcess"}]', List<Total_Agility_Process_Configurations__mdt>.class);
+        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{"Callback_Execution_Method__c":"Flow","Callback_Logi_Apex_or_Flow_name__c":"testFlow","Flow_Variable_mapping__c":"{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}","Total_Agility_Process_Name__c":"accountCreationProcess"}]', List<Total_Agility_Process_Configurations__mdt>.class);
         Test.startTest();
         String responseMessage = '{"Name": "Acme Corporation", "Phone": "123-456-7890", "Industry": "Technology"}';
         TAJobResponseHelper.processConfigurations = processConfigurations;
 
-        tungstenconnect__JobResponse__e jobEvent = new tungstenconnect__JobResponse__e(
-            tungstenconnect__Process_Name__c = 'accountCreationProcess',
-            tungstenconnect__Response_Message__c = responseMessage,
-            tungstenconnect__Response_Timestamp__c = DateTime.now()
+        JobResponse__e jobEvent = new JobResponse__e(
+            Process_Name__c = 'accountCreationProcess',
+            Response_Message__c = responseMessage,
+            Response_Timestamp__c = DateTime.now()
         );
 
         // Publish the platform event
@@ -96,15 +96,15 @@ private class TAJobResponseTriggerTest {
 
     @IsTest
     static void testFlowUtilityComplexFlowMapping() {
-        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{\"tungstenconnect__Callback_Execution_Method__c\":\"Flow\",\"tungstenconnect__Callback_Logi_Apex_or_Flow_name__c\":\"testFlow\",\"tungstenconnect__Flow_Variable_mapping__c\":\"{\\\"EmployeeAccount\\\":{\\\"Path\\\":\\\"EmployeeAccount\\\",\\\"SObject\\\":\\\"Account\\\",\\\"isCollection\\\":false,\\\"FieldsMapping\\\":{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}}}\",\"tungstenconnect__Total_Agility_Process_Name__c\":\"accountCreationProcess\"}]', List<Total_Agility_Process_Configurations__mdt>.class);
+        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{\"Callback_Execution_Method__c\":\"Flow\",\"Callback_Logi_Apex_or_Flow_name__c\":\"testFlow\",\"Flow_Variable_mapping__c\":\"{\\\"EmployeeAccount\\\":{\\\"Path\\\":\\\"EmployeeAccount\\\",\\\"SObject\\\":\\\"Account\\\",\\\"isCollection\\\":false,\\\"FieldsMapping\\\":{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}}}\",\"Total_Agility_Process_Name__c\":\"accountCreationProcess\"}]', List<Total_Agility_Process_Configurations__mdt>.class);
         Test.startTest();
         String responseMessage = '{"EmployeeAccount":{"Name": "Acme Corporation", "Phone": "123-456-7890", "Industry": "Technology"}}';
         TAJobResponseHelper.processConfigurations = processConfigurations;
 
-        tungstenconnect__JobResponse__e jobEvent = new tungstenconnect__JobResponse__e(
-            tungstenconnect__Process_Name__c = 'accountCreationProcess',
-            tungstenconnect__Response_Message__c = responseMessage,
-            tungstenconnect__Response_Timestamp__c = DateTime.now()
+        JobResponse__e jobEvent = new JobResponse__e(
+            Process_Name__c = 'accountCreationProcess',
+            Response_Message__c = responseMessage,
+            Response_Timestamp__c = DateTime.now()
         );
 
         // Publish the platform event
@@ -130,15 +130,15 @@ private class TAJobResponseTriggerTest {
 
     @IsTest
     static void testFlowUtilityComplexFlowMappingCollection() {
-        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{\"tungstenconnect__Callback_Execution_Method__c\":\"Flow\",\"tungstenconnect__Callback_Logi_Apex_or_Flow_name__c\":\"testFlow\",\"tungstenconnect__Flow_Variable_mapping__c\":\"{\\\"EmployeeAccounts\\\":{\\\"Path\\\":\\\"EmployeeAccounts\\\",\\\"SObject\\\":\\\"Account\\\",\\\"isCollection\\\":true,\\\"FieldsMapping\\\":{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}}}\",\"tungstenconnect__Total_Agility_Process_Name__c\":\"accountCreationProcess\"}]', List<Total_Agility_Process_Configurations__mdt>.class);
+        List<Total_Agility_Process_Configurations__mdt> processConfigurations = (List<Total_Agility_Process_Configurations__mdt>)Json.deserialize('[{\"Callback_Execution_Method__c\":\"Flow\",\"Callback_Logi_Apex_or_Flow_name__c\":\"testFlow\",\"Flow_Variable_mapping__c\":\"{\\\"EmployeeAccounts\\\":{\\\"Path\\\":\\\"EmployeeAccounts\\\",\\\"SObject\\\":\\\"Account\\\",\\\"isCollection\\\":true,\\\"FieldsMapping\\\":{\\\"Name\\\":\\\"Name\\\",\\\"Phone\\\":\\\"Phone\\\"}}}\",\"Total_Agility_Process_Name__c\":\"accountCreationProcess\"}]', List<Total_Agility_Process_Configurations__mdt>.class);
         Test.startTest();
         String responseMessage = '{"EmployeeAccounts":[{"Name": "Acme Corporation", "Phone": "123-456-7890", "Industry": "Technology"},{"Name": "Beta Corporation", "Phone": "778-456-4567", "Industry": "Technology"}]}';
         TAJobResponseHelper.processConfigurations = processConfigurations;
 
-        tungstenconnect__JobResponse__e jobEvent = new tungstenconnect__JobResponse__e(
-            tungstenconnect__Process_Name__c = 'accountCreationProcess',
-            tungstenconnect__Response_Message__c = responseMessage,
-            tungstenconnect__Response_Timestamp__c = DateTime.now()
+        JobResponse__e jobEvent = new JobResponse__e(
+            Process_Name__c = 'accountCreationProcess',
+            Response_Message__c = responseMessage,
+            Response_Timestamp__c = DateTime.now()
         );
 
         // Publish the platform event

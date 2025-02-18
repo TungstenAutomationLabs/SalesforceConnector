@@ -8,12 +8,6 @@
     },
     "communitiesSettings": {
       "enableNetworksEnabled":true
-    },
-    "externalClientAppSettings": {
-      "enableExternalClientApps": true
-    },
-    "ExperienceBundleSettings": {
-      "enableExperienceBundleMetadata":true
     }
   }
 }
