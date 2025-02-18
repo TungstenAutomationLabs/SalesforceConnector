@@ -1,12 +1,42 @@
 {
   "packageDirectories": [
     {
-      "path": "force-app",
-      "default": true
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "path": "ta-connector",
+      "default": true,
+      "package": "TA_SF_Connector",
+      "versionDescription": "Salesforce TotalAgility Connector"
+    },
+    {
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "path": "ta-connector-demo-ext",
+      "default": false,
+      "package": "Document_Extraction_Demo",
+      "versionDescription": "SF TA Connector Demo implementation",
+      "dependencies": [
+        {
+          "package": "TA_SF_Connector",
+          "versionNumber": "0.1.0.LATEST"
+        }
+      ]
     }
   ],
-  "name": "SalesforceConnector",
   "namespace": "tungstenconnect",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "61.0"
+  "sourceApiVersion": "61.0",
+  "packageAliases": {
+    "TA_SF_Connector": "0Hoak0000000ROPCA2",
+    "TA_SF_Connector@0.1.0-1": "04tak0000006hGnAAI",
+    "Document_Extraction_Demo": "0Hoak0000000RQ1CAM",
+    "TA_SF_Connector@0.1.0-2": "04tak0000006hIPAAY",
+    "Document_Extraction_Demo@0.1.0-1": "04tak0000006hK1AAI",
+    "TA_SF_Connector@0.1.0-3": "04tak0000006htVAAQ",
+    "Document_Extraction_Demo@0.1.0-2": "04tak0000006hv7AAA",
+    "TA_SF_Connector@0.1.0-4": "04tak0000006hwjAAA",
+    "Document_Extraction_Demo@0.1.0-3": "04tak0000006hyLAAQ",
+    "TA_SF_Connector@0.1.0-5": "04tak0000006i6PAAQ",
+    "Document_Extraction_Demo@0.1.0-4": "04tak0000006i81AAA"
+  }
 }
